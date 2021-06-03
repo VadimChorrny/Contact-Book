@@ -24,13 +24,12 @@ namespace ICommand_MVVM
 
         public ViewModel()
         {
-            contacts.Add(new Contact() { Name = "Вова", Age = 30, Surname = "Зеленський", Phone = "+3809934532123", IsMale = true });
-            contacts.Add(new Contact() { Name = "Рінат", Age = 25, Surname = "Ахметов", Phone = "+38037124224", IsMale = false });
-            contacts.Add(new Contact() { Name = "Беня(Ігор)", Age = 33, Surname = "Коломойській", Phone = "+38063285792", IsMale = false });
+            contacts.Add(new Contact() { Name = "Вова", Age = 30, Surname = "Зеленський", Phone = "+3809934532123", City="Кривий ріг" ,IsMale = true, PathToImage= "C:/Users/vadim_oyanwuw/source/repos/ICommand-MVVM/ICommand-MVVM/sasha.png" });
+            contacts.Add(new Contact() { Name = "Рінат", Age = 25, Surname = "Ахметов", Phone = "+38037124224", City = "Донбасс", IsMale = false, PathToImage= "C:/Users/vadim_oyanwuw/source/repos/ICommand-MVVM/ICommand-MVVM/ahmetov.png" });
+            contacts.Add(new Contact() { Name = "Беня(Ігор)", Age = 33, Surname = "Коломойській", Phone = "+38063285792", City = "Дніпро", IsMale = false, PathToImage= "C:/Users/vadim_oyanwuw/source/repos/ICommand-MVVM/ICommand-MVVM/privat.png" });
             copyContactCommand = new DelegateCommand(DublicateSelectedContact, IsCanSetCreate);
             removeContactCommand = new DelegateCommand(RemoveSelectedContact, IsCanSetRemove);
 
-            // встановлення обробника на подію зміни властивості 
             PropertyChanged += (s, a) =>
             {
                 if (a.PropertyName == nameof(SelectedContact))
@@ -58,19 +57,21 @@ namespace ICommand_MVVM
         public ICommand CopyContactCommand => copyContactCommand;
         public ICommand RemoveContactCommand => removeContactCommand;
 
+        // CREATE
         bool IsCanSetCreate()
         {
             return SelectedContact != null;
         }
-        // Метод дублювання вибраного контакта
         public void DublicateSelectedContact()
         {
             if (SelectedContact != null)
             {
+                SelectedContact.AddImage();
                 contacts.Add((Contact)SelectedContact.Clone()); // on contacts func
             }
         }
 
+        // REMOVE
         bool IsCanSetRemove()
         {
             return SelectedContact != null;
@@ -81,12 +82,7 @@ namespace ICommand_MVVM
                 contacts.Remove(SelectedContact);
         }
 
-        bool IsCanOnlyCreate()
-        {
-            return true;
-        }
-
-
+        // PROPERTY CHANGED EVENTS
         public void OnPropertyChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));

@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ICommand_MVVM"
+        xmlns:local="clr-namespace:ICommand_MVVM" d:DataContext="{d:DesignInstance Type=local:ViewModel}"
         mc:Ignorable="d"
-        Title="Contact" Height="450" Width="800">
+        Title="Contact" Height="470" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
@@ -14,6 +14,9 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="2" Background="#D3EE73 ">
+            <Border Margin="10"  Grid.RowSpan="2" Width="60" Height="60" Background="Black" CornerRadius="50">
+                <Image  Source="{Binding Path=SelectedContact.PathToImage}"></Image>
+            </Border>
             <Label HorizontalAlignment="Center">Name</Label>
             <TextBox Text="{Binding Path=SelectedContact.Name}" Margin="20,0"></TextBox>
             <Label HorizontalAlignment="Center">Surname</Label>
@@ -22,6 +25,8 @@
             <TextBox Text="{Binding Path=SelectedContact.Age}" Margin="20,0"></TextBox>
             <Label HorizontalAlignment="Center">Phone</Label>
             <TextBox Text="{Binding Path=SelectedContact.Phone}" Margin="20,0"></TextBox>
+            <Label HorizontalAlignment="Center">City</Label>
+            <TextBox Text="{Binding Path=SelectedContact.City}" Margin="20,0"></TextBox>
             <Label HorizontalAlignment="Left" Margin="20,0">Is Male:</Label>
             <CheckBox IsChecked="{Binding SelectedContact.IsMale}" Margin="20,0"></CheckBox>
             <Button Height="30" FontWeight="Bold" FontSize="15" Command="{Binding CopyContactCommand}" Background="#FF7EC97E" Margin="20,20,20,5">Create Contact Copy</Button>
@@ -47,11 +52,12 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Border Margin="0,0,10,0" HorizontalAlignment="Left" Grid.RowSpan="2" Width="40" Height="40" Background="Black" CornerRadius="50">
-                            <Image Source="user_icon.png"></Image>
+                            <Image Source="{Binding Path=PathToImage}"></Image>
                         </Border>
                         <DockPanel Grid.Column="1" Grid.Row="0">
                             <TextBlock Text="{Binding Path=Name}" FontSize="18" FontWeight="Bold"></TextBlock>
                             <TextBlock Text="{Binding Path=Surname}" FontSize="18" FontWeight="Bold" Margin="10,0"></TextBlock>
+                            <TextBlock Text="{Binding Path=City}" FontSize="18" FontWeight="ExtraBold" Margin="10,0"></TextBlock>
                         </DockPanel>
                         <DockPanel Grid.Column="1" Grid.Row="1" LastChildFill="False">
                             <TextBlock Text="Gender: " FontWeight="Light"></TextBlock>

@@ -73,7 +73,17 @@ namespace ICommand_MVVM
         }
 
         // City
-        
+        private string city;
+        public string City
+        {
+            get => city;
+            set
+            {
+                city = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         // isMale
         private bool isMale;
@@ -91,23 +101,42 @@ namespace ICommand_MVVM
             }
         }
 
+        // Image
+        private string path;
+        public string PathToImage
+        {
+            get { return path; }
+            set 
+            { 
+                path = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         public string GenderName => IsMale ? "Male" : "Female";
 
         public string Fullname => $"{Name} {Surname}";
 
         public object Clone()
-        {
-            // shallow copy (поверхневе копіювання) - копіюються лише 
-            // значення value типів та посилання reference типів
+        { 
             Contact clone = (Contact)this.MemberwiseClone();
-
-            // deep copy (глибоке копіювання) - кожний reference тип
-            // копіюється власним методом клонування
             clone.Name = (string)this.Name.Clone();
             clone.Surname = (string)this.Surname.Clone();
             clone.Phone = (string)this.Phone.Clone();
-
             return clone;
+        }
+
+        public void AddImage()
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.Filter = "Only images (.png)|*.png";
+            Nullable<bool> result = dlg.ShowDialog();
+            if (result == true)
+            {
+                // Open document
+                PathToImage = dlg.FileName;
+            }
         }
 
         // func for change properties callermemebers
